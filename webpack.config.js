@@ -1,9 +1,10 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   devtool: 'source-map',
   entry: [
-    './src/index.js',
+    path.join(__dirname, 'src/index'),
   ],
   output: {
     path: path.join(__dirname, 'build'),
@@ -17,6 +18,17 @@ module.exports = {
       target: 'http://localhost:3001',
     }],
     historyApiFallback: true,
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      },
+    }),
+  ],
+  resolve: {
+    root: path.resolve('./src'),
+    extensions: ['.js', '.jsx', ''],
   },
   module: {
     loaders: [
