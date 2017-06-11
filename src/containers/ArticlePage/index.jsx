@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // eslint-disable-next-line react/prefer-stateless-function
-class PostPage extends Component {
+class ArticlePage extends Component {
   render() {
     return (
       <div>
-        PostPage
+        ArticlePage
       </div>
     );
   }
 }
 
-PostPage.propTypes = {
+ArticlePage.propTypes = {
 
 };
 
-export default PostPage;
+export default ArticlePage;

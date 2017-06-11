@@ -9,6 +9,8 @@ import App from 'containers/App';
 
 import configureStore from './store';
 
+import './api';
+
 const store = configureStore();
 
 ReactDOM.render(
