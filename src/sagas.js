@@ -1,3 +1,5 @@
-export default function* rootSaga() {
-  console.log('Hello world!');
-}
+import { saga as articlesSaga } from 'ducks/articles';
+
+export default [
+  articlesSaga,
+];

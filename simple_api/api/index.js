@@ -35,6 +35,11 @@ router.post('/article', function (req, res, next) {
     res.json(article)
 });
 
+router.delete('/article/:id', function (req, res, next) {
+    mocks.articles = mocks.articles.filter(article => String(article.id) !== req.params.id);
+    res.json({ success: true });
+});
+
 router.get('/comment', function (req, res, next) {
     var aid = req.query.article;
     if (aid) {

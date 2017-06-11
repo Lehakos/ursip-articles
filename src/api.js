@@ -23,7 +23,7 @@ const cachedGet = memoize(
  * @param {number} params.offset - с какого индекса хотим получить статьи
  * @returns {Object[]}
  */
-export const getArticlesList = params => cachedGet('/article', { params });
+export const getArticles = params => cachedGet('/article', { params });
 
 /**
  * Получить детальную информацию по определенной статье
@@ -37,6 +37,12 @@ export const getArticle = id => cachedGet(`article/${id}`);
  * @param {Object} data - данные для статьи
  */
 export const addArticle = data => axios.post('article', data);
+
+/**
+ * Удалить статью
+ * @param {string | number} id - id статьи
+ */
+export const deleteArticle = id => axios.delete(`article/${id}`);
 
 /**
  * Получить список комментариев к статье

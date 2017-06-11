@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux-immutable';
 
-import appReducer from 'containers/App/reducer';
+import articlesReducer from 'ducks/articles';
 
 const rootReducer = combineReducers({
-  app: appReducer,
+  articles: articlesReducer,
 });
 
 export default rootReducer;
