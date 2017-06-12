@@ -29,7 +29,7 @@ function listReducer(state = listInitialState, action) {
 
     case types.ADD_ARTICLE_SUCCESS:
       return state
-        .setIn(['by', payload.article.id], payload.article)
+        .setIn(['by', payload.article.id], fromJS(payload.article))
         .update('ids', ids => ids.unshift(payload.article.id));
 
     case types.DELETE_ARTICLE_SUCCESS:
@@ -47,7 +47,7 @@ function listReducer(state = listInitialState, action) {
 
 const selectedInitialState = fromJS({
   loading: true,
-  data: {},
+  data: null,
 });
 
 function selectedReducer(state = selectedInitialState, action) {
@@ -61,11 +61,15 @@ function selectedReducer(state = selectedInitialState, action) {
     case types.GET_ARTICLE_SUCCESS:
       return state
         .set('loading', false)
-        .set('data', payload.article);
+        .set('data', fromJS(payload.article));
 
     case types.GET_ARTICLE_FAIL:
       return state
         .set('loading', false)
+        .set('data', null);
+
+    case types.DELETE_ARTICLE_SUCCESS:
+      return state
         .set('data', null);
 
     default:

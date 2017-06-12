@@ -42,7 +42,11 @@ export const addArticle = data => axios.post('article', data);
  * Удалить статью
  * @param {string | number} id - id статьи
  */
-export const deleteArticle = id => axios.delete(`article/${id}`);
+export const deleteArticle = id => axios.delete(`article/${id}`)
+  .then((response) => {
+    cachedGet.cache.clear();
+    return Promise.resolve(response);
+  });
 
 /**
  * Получить список комментариев к статье

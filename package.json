@@ -34,6 +34,8 @@
     "axios": "^0.16.2",
     "babel-polyfill": "^6.23.0",
     "cross-env": "^5.0.1",
+    "hedron": "^0.7.1",
+    "history": "^4.6.1",
     "immutable": "^3.8.1",
     "lodash": "^4.17.4",
     "material-ui": "^0.18.3",
@@ -45,12 +47,14 @@
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
+    "react-router-redux": "^5.0.0-alpha.6",
     "react-tap-event-plugin": "^2.0.1",
     "redux": "^3.6.0",
     "redux-form": "^6.8.0",
     "redux-immutable": "^4.0.0",
     "redux-saga": "^0.15.3",
     "reselect": "^3.0.1",
-    "styled-components": "^2.0.1"
+    "styled-components": "^2.0.1",
+    "styled-tools": "^0.1.4"
   }
 }

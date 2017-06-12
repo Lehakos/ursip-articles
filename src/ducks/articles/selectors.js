@@ -30,7 +30,35 @@ const makeSelectArticlesList = () => createSelector(
   },
 );
 
+const getSelected = createSelector(
+  getArticlesState,
+  articlesState => articlesState.get('selected'),
+);
+
+const makeSelectArticleLoadingState = () => createSelector(
+  getSelected,
+  selected => selected.get('loading'),
+);
+
+const getSelectedData = createSelector(
+  getSelected,
+  selected => selected.get('data'),
+);
+
+const makeSelectArticleData = () => createSelector(
+  getSelectedData,
+  (data) => {
+    if (!data) {
+      return null;
+    }
+
+    return data.toJS();
+  },
+);
+
 export {
   makeSelectListLoadingState,
   makeSelectArticlesList,
+  makeSelectArticleLoadingState,
+  makeSelectArticleData,
 };

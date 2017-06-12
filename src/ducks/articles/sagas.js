@@ -1,4 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+import { push } from 'react-router-redux';
 import * as api from 'api';
 
 import * as types from './types';
@@ -44,6 +45,11 @@ export function* addArticle({ payload }) {
 export function* deleteArticle({ payload }) {
   try {
     yield call(api.deleteArticle, payload.id);
+
+    if (payload.redirectPath) {
+      yield put(push(payload.redirectPath));
+    }
+
     yield put(actions.deleteArticleSuccess(payload.id));
   } catch (err) {
     console.error(err);

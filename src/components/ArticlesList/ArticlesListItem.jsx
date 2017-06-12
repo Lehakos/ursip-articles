@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { ListItem } from 'material-ui/List';
 import { grey400 } from 'material-ui/styles/colors';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
-import moment from 'moment';
+import StyledDate from 'components/StyledDate';
 
 const iconButtonElement = (
   <IconButton
@@ -18,33 +20,59 @@ const iconButtonElement = (
   </IconButton>
 );
 
-const ArticlesListItem = ({ title, date, onDelete }) => {
-  const dateObj = moment(Date.parse(date));
+const StyledLink = styled(Link)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+`;
 
-  return (
-    <ListItem
-      rightIconButton={
-        <IconMenu iconButtonElement={iconButtonElement}>
-          <MenuItem onTouchTap={onDelete}>Удалить</MenuItem>
-        </IconMenu>
-      }
-      primaryText={title}
-      secondaryText={
-        dateObj &&
-        <p>
-          <time
-            style={{ color: grey400 }}
-            dateTime={dateObj.format()}
+class ArticlesListItem extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.onDeleteClick = ::this.onDeleteClick;
+  }
+
+  onDeleteClick(e) {
+    const { onDelete, id } = this.props;
+
+    e.preventDefault();
+
+    if (onDelete) {
+      onDelete(id);
+    }
+  }
+
+  render() {
+    const { id, title, date } = this.props;
+
+    return (
+      <ListItem
+        rightIconButton={
+          <IconMenu
+            style={{ zIndex: 1 }}
+            iconButtonElement={iconButtonElement}
           >
-            {dateObj.format('DD.MM.YYYY')}
-          </time>
-        </p>
-      }
-    />
-  );
-};
+            <MenuItem onTouchTap={this.onDeleteClick}>Удалить</MenuItem>
+          </IconMenu>
+        }
+        primaryText={title}
+        secondaryText={
+          <div>
+            <StyledDate date={date} />
+          </div>
+        }
+      >
+        <StyledLink to={`/articles/${id}`} />
+      </ListItem>
+    );
+  }
+}
 
 ArticlesListItem.propTypes = {
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   date: PropTypes.string,
   onDelete: PropTypes.func,

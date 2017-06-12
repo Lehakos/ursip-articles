@@ -42,9 +42,9 @@ export const addArticleFail = () => ({
   type: types.ADD_ARTICLE_FAIL,
 });
 
-export const deleteArticle = id => ({
+export const deleteArticle = (id, redirectPath) => ({
   type: types.DELETE_ARTICLE,
-  payload: { id },
+  payload: { id, redirectPath },
 });
 
 export const deleteArticleSuccess = id => ({

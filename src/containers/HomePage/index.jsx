@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Page } from 'hedron';
+import ArticlesList from 'components/ArticlesList';
+import Loading from 'components/Loading';
 import {
   selectors as articlesSelectors,
   actions as articlesActions,
 } from 'ducks/articles';
-import ArticlesList from 'components/ArticlesList';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class HomePage extends Component {
@@ -15,15 +17,20 @@ class HomePage extends Component {
   }
 
   render() {
-    const { articles, deleteArticle } = this.props;
+    const { articles, deleteArticle, loading } = this.props;
 
     return (
-      <div>
-        <ArticlesList
-          items={articles}
-          onItemDelete={deleteArticle}
-        />
-      </div>
+      <Page>
+        {
+          loading ?
+            <Loading />
+            :
+            <ArticlesList
+              items={articles}
+              onItemDelete={deleteArticle}
+            />
+        }
+      </Page>
     );
   }
 }
@@ -32,10 +39,12 @@ HomePage.propTypes = {
   articles: ArticlesList.propTypes.items,
   deleteArticle: PropTypes.func,
   getArticles: PropTypes.func,
+  loading: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   articles: articlesSelectors.makeSelectArticlesList(),
+  loading: articlesSelectors.makeSelectListLoadingState(),
 });
 
 const mapDispatchToProps = dispatch => ({

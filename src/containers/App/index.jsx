@@ -1,22 +1,26 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 import HomePage from 'containers/HomePage';
 import ArticlePage from 'containers/ArticlePage';
 import NotFoundPage from 'containers/NotFoundPage';
-import Container from 'components/Container';
+
+const Main = styled.main`
+  padding: 15px 0;
+`;
 
 // eslint-disable-next-line react/prefer-stateless-function
-class App extends PureComponent {
+class App extends Component {
   render() {
     return (
-      <Container>
+      <Main>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route path="/posts/:id" component={ArticlePage} />
+          <Route path="/articles/:id" component={ArticlePage} />
           <Route path="*" component={NotFoundPage} />
         </Switch>
-      </Container>
+      </Main>
     );
   }
 }
