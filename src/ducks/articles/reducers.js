@@ -7,6 +7,13 @@ const listInitialState = fromJS({
   byId: {},
   ids: [],
   loading: true,
+  filters: {
+    date: {
+      start: null,
+      end: null,
+    },
+    title: '',
+  },
 });
 
 function listReducer(state = listInitialState, action) {
@@ -39,6 +46,9 @@ function listReducer(state = listInitialState, action) {
           'ids',
           ids => ids.filter(id => id !== payload.id),
         );
+
+    case types.CHANGE_FILTER:
+      return state.mergeIn(['filters'], fromJS(payload.filter));
 
     default:
       return state;

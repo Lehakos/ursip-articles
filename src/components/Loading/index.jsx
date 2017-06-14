@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { prop } from 'styled-tools';
 import CircularProgress from 'material-ui/CircularProgress';
+import Subheader from 'material-ui/Subheader';
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,12 +14,14 @@ const Wrapper = styled.div`
   font-size: ${prop('fontSize')}px;
 `;
 
-const Text = styled.span`
-  margin-left: 10px;
-`;
+const textStyle = {
+  marginLeft: '10px',
+  padding: 0,
+  fontSize: 'inherit',
+};
 
 const BASE_SIZE = 30;
-const BASE_FONT = 16;
+const BASE_FONT = 18;
 
 const Loading = ({ fontSize, text }) => {
   const size = BASE_SIZE * (BASE_FONT / fontSize);
@@ -26,7 +29,7 @@ const Loading = ({ fontSize, text }) => {
   return (
     <Wrapper fontSize={fontSize}>
       <CircularProgress size={size} />
-      <Text>{text}</Text>
+      <Subheader style={textStyle}>{text}</Subheader>
     </Wrapper>
   );
 };

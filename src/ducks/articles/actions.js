@@ -55,3 +55,8 @@ export const deleteArticleSuccess = id => ({
 export const deleteArticleFail = () => ({
   type: types.DELETE_ARTICLE_FAIL,
 });
+
+export const changeFilter = filter => ({
+  type: types.CHANGE_FILTER,
+  payload: { filter },
+});

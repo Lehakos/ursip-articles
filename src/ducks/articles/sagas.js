@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import * as api from 'api';
+import { actions as notificationActions } from 'ducks/notification';
 
 import * as types from './types';
 import * as actions from './actions';
@@ -51,6 +52,7 @@ export function* deleteArticle({ payload }) {
     }
 
     yield put(actions.deleteArticleSuccess(payload.id));
+    yield put(notificationActions.showNotification('Статья удалена'));
   } catch (err) {
     console.error(err);
     yield put(actions.deleteArticleFail());

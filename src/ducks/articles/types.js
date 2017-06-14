@@ -13,3 +13,5 @@ export const ADD_ARTICLE_FAIL = 'app/articles/ADD_ARTICLE_FAIL';
 export const DELETE_ARTICLE = 'app/articles/DELETE_ARTICLE';
 export const DELETE_ARTICLE_SUCCESS = 'app/articles/DELETE_ARTICLE_SUCCESS';
 export const DELETE_ARTICLE_FAIL = 'app/articles/DELETE_ARTICLE_FAIL';
+
+export const CHANGE_FILTER = 'app/articles/CHANGE_FILTER';

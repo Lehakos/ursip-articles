@@ -5,7 +5,6 @@ import { createStructuredSelector } from 'reselect';
 import { withRouter } from 'react-router-dom';
 import Article from 'components/Article';
 import Loading from 'components/Loading';
-import { Page } from 'hedron';
 import {
   selectors as articlesSelectors,
   actions as articlesActions,
@@ -23,24 +22,18 @@ class ArticlePage extends PureComponent {
     const { data, deleteArticle, loading } = this.props;
 
     if (loading) {
-      return (
-        <Page>
-          <Loading />
-        </Page>
-      );
+      return <Loading />;
     }
 
     if (!data) {
-      return <Page>Ничего не найдено</Page>;
+      return <div>Ничего не найдено</div>;
     }
 
     return (
-      <Page>
-        <Article
-          {...data}
-          onDelete={deleteArticle}
-        />
-      </Page>
+      <Article
+        {...data}
+        onDelete={deleteArticle}
+      />
     );
   }
 }
