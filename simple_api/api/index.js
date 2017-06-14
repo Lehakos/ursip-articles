@@ -28,7 +28,7 @@ router.post('/article', function (req, res, next) {
     var article = {
         text: body.text,
         id: Date.now().toString(),
-        user: body.user,
+        title: body.title,
         date: new Date()
     };
     mocks.articles.push(article);

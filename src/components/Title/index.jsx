@@ -22,6 +22,7 @@ const Wrapper = styled.h2`
 const Title = ({ tag, children, style, size, divider }) => {
   const Tag = tag ? Wrapper.withComponent(tag) : Wrapper;
   const headerStyle = {
+    padding: 0,
     marginBottom: '1em',
     fontSize: `${sizes[size]}px`,
     ...style,

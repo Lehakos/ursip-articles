@@ -73,7 +73,7 @@ const makeSelectArticlesList = () => createSelector(
 const makeSelectArticlesTitle = () => createSelector(
   [getArticlesById, getArticlesIds],
   (articles, ids) => {
-    const titles = ids.map(id => articles.getIn([id, 'title']));
+    const titles = ids.map(id => articles.getIn([id, 'title']).toLowerCase());
     return titles.toJS();
   },
 );

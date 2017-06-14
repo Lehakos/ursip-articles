@@ -28,6 +28,7 @@
     "rules": {
       "import/no-unresolved": 0,
       "import/prefer-default-export": 0,
+      "no-confusing-arrow": 0,
       "react/require-default-props": 0,
       "react/forbid-prop-types": 1
     }

@@ -35,7 +35,7 @@ const Sidebar = ({ children, className, footer, title }) => (
       {
         !!title &&
         <Header>
-          <Title style={{ padding: 0, marginBottom: 0 }} divider size="l">
+          <Title style={{ marginBottom: 0 }} divider size="l">
             {title}
           </Title>
         </Header>

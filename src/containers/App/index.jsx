@@ -8,6 +8,7 @@ import { Page } from 'hedron';
 import Snackbar from 'material-ui/Snackbar';
 import HomePage from 'containers/HomePage';
 import ArticlePage from 'containers/ArticlePage';
+import NewArticlePage from 'containers/NewArticlePage';
 import NotFoundPage from 'containers/NotFoundPage';
 import {
   actions as notificationActions,
@@ -28,7 +29,8 @@ class App extends Component {
         <Page>
           <Switch>
             <Route exact path="/" component={HomePage} />
-            <Route path="/articles/:id" component={ArticlePage} />
+            <Route exact path="/articles/new" component={NewArticlePage} />
+            <Route exact path="/articles/:id" component={ArticlePage} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
           <Snackbar
