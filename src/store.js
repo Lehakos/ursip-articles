@@ -37,7 +37,7 @@ export default function configureStore(initialState = {}) {
     composeEnhancers(...enhancers),
   );
 
-  sagaMiddleware.run(...rootSaga);
+  sagaMiddleware.run(rootSaga);
 
   if (module.hot) {
     module.hot.accept('./reducers', () => {

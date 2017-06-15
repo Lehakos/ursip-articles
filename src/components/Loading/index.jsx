@@ -17,7 +17,9 @@ const Wrapper = styled.div`
 const textStyle = {
   marginLeft: '10px',
   padding: 0,
+  width: 'auto',
   fontSize: 'inherit',
+  fontWeight: 400,
 };
 
 const BASE_SIZE = 30;

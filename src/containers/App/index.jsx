@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import styled from 'styled-components';
-import { Switch, Route, withRouter, Link } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import { Page } from 'hedron';
 import Snackbar from 'material-ui/Snackbar';
 import HomePage from 'containers/HomePage';
@@ -14,6 +14,8 @@ import {
   actions as notificationActions,
   selectors as notificationSelectors,
 } from 'ducks/notification';
+
+import './global-styles';
 
 const Main = styled.main`
   padding: 15px 0;

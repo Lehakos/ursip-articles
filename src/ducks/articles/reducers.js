@@ -16,9 +16,7 @@ const listInitialState = fromJS({
   },
 });
 
-function listReducer(state = listInitialState, action) {
-  const { type, payload } = action;
-
+function listReducer(state = listInitialState, { type, payload }) {
   switch (type) {
     case types.GET_ARTICLES:
       return state.set('loading', true);
@@ -60,9 +58,7 @@ const selectedInitialState = fromJS({
   data: null,
 });
 
-function selectedReducer(state = selectedInitialState, action) {
-  const { type, payload } = action;
-
+function selectedReducer(state = selectedInitialState, { type, payload }) {
   switch (type) {
     case types.GET_ARTICLE:
       return state.set('loading', true);

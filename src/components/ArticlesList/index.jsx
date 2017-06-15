@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { List } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 
-import ArticlesListItem from './ArticlesListItem';
+import ArticlesListItem from './Item';
 
 const ItemWrapper = styled.div`
   position: relative;

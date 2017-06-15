@@ -11,9 +11,7 @@ const initialState = fromJS({
   action: null,
 });
 
-export default function (state = initialState, action) {
-  const { type, payload } = action;
-
+export default function (state = initialState, { type, payload }) {
   switch (type) {
     case types.CHANGE_NOTIFICATION:
       return state.set('text', payload.text);

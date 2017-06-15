@@ -5,7 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 import StyledDate from 'components/StyledDate';
 
-const Article = ({ title, date, text, id, onDelete }) => {
+const Article = ({ title, date, text, id, onDelete, className }) => {
   const onDeleteClick = (e) => {
     e.preventDefault();
 
@@ -15,7 +15,7 @@ const Article = ({ title, date, text, id, onDelete }) => {
   };
 
   return (
-    <Card>
+    <Card className={className}>
       <CardHeader
         subtitle={
           <StyledDate date={date} />
@@ -38,6 +38,7 @@ const Article = ({ title, date, text, id, onDelete }) => {
 };
 
 Article.propTypes = {
+  className: PropTypes.string,
   date: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   onDelete: PropTypes.func,

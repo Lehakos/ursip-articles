@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
+import { call, put, fork, takeLatest, takeEvery } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import * as api from 'api';
 import { actions as notificationActions } from 'ducks/notification';
@@ -38,7 +38,7 @@ export function* getArticle({ payload }) {
 export function* addArticle({ payload }) {
   try {
     const response = yield call(api.addArticle, payload.data);
-    yield put(notificationActions.showNotification({
+    yield fork(notificationActions.showNotification({
       action: (
         // eslint-disable-next-line react/jsx-filename-extension
         <Link
@@ -54,7 +54,7 @@ export function* addArticle({ payload }) {
     yield put(actions.addArticleSuccess(response.data));
   } catch (err) {
     console.error(err);
-    yield put(notificationActions.showNotification({ text: 'Не удалось добавить статью' }));
+    yield fork(notificationActions.showNotification({ text: 'Не удалось добавить статью' }));
     yield put(actions.addArticleFail());
   }
 }
@@ -68,10 +68,10 @@ export function* deleteArticle({ payload }) {
     }
 
     yield put(actions.deleteArticleSuccess(payload.id));
-    yield put(notificationActions.showNotification({ text: 'Статья удалена' }));
+    yield fork(notificationActions.showNotification({ text: 'Статья удалена' }));
   } catch (err) {
     console.error(err);
-    yield put(notificationActions.showNotification({ text: 'Не удалось удалить статью' }));
+    yield fork(notificationActions.showNotification({ text: 'Не удалось удалить статью' }));
     yield put(actions.deleteArticleFail());
   }
 }

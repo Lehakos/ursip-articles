@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Row, Column } from 'hedron';
-import Subheader from 'material-ui/Subheader';
+import Text from 'components/Text';
 import ArticlesList from 'components/ArticlesList';
 import Loading from 'components/Loading';
 import {
@@ -40,11 +40,7 @@ class HomePage extends Component {
     if (loading) {
       content = <Loading />;
     } else if (!articles || !articles.length) {
-      content = (
-        <Subheader style={{ padding: 0, fontSize: '18px' }}>
-          Не найдено ни одной статьи.
-        </Subheader>
-      );
+      content = <Text text="Не найдено ни одной статьи." />;
     }
 
     return (

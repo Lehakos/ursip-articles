@@ -16,6 +16,11 @@ const cachedGet = memoize(
   convertToKey,
 );
 
+const clearCache = (res) => {
+  cachedGet.cache.clear();
+  return Promise.resolve(res);
+};
+
 /**
  * Получить список статей
  * @param {Object} params - фильтры для выборки статей
@@ -36,21 +41,13 @@ export const getArticle = id => cachedGet(`article/${id}`);
  * Добавить новую статью
  * @param {Object} data - данные для статьи
  */
-export const addArticle = data => axios.post('article', data)
-  .then((response) => {
-    cachedGet.cache.clear();
-    return Promise.resolve(response);
-  });
+export const addArticle = data => axios.post('article', data).then(clearCache);
 
 /**
  * Удалить статью
  * @param {string | number} id - id статьи
  */
-export const deleteArticle = id => axios.delete(`article/${id}`)
-  .then((response) => {
-    cachedGet.cache.clear();
-    return Promise.resolve(response);
-  });
+export const deleteArticle = id => axios.delete(`article/${id}`).then(clearCache);
 
 /**
  * Получить список комментариев к статье
@@ -63,4 +60,4 @@ export const getComments = article => cachedGet('comment', { params: { article }
  * Добавить новый комментарий
  * @param {Object} data - данные для комментария
  */
-export const addComment = data => axios.post('comment', data);
+export const addComment = data => axios.post('comment', data).then(clearCache);
