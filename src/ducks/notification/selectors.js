@@ -2,17 +2,11 @@ import { createSelector } from 'reselect';
 
 const getDomainState = state => state.get('notification');
 
-const makeSelectShowState = () => createSelector(
+const makeSelectNotificationState = () => createSelector(
   getDomainState,
-  notification => notification.get('show'),
-);
-
-const makeSelectText = () => createSelector(
-  getDomainState,
-  notification => notification.get('text'),
+  notif => notif.toJS(),
 );
 
 export {
-  makeSelectShowState,
-  makeSelectText,
+  makeSelectNotificationState,
 };

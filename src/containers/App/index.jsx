@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import styled from 'styled-components';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { Switch, Route, withRouter, Link } from 'react-router-dom';
 import { Page } from 'hedron';
 import Snackbar from 'material-ui/Snackbar';
 import HomePage from 'containers/HomePage';
@@ -22,7 +22,7 @@ const Main = styled.main`
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends Component {
   render() {
-    const { showNotification, notification, hideNotification } = this.props;
+    const { notification, hideNotification } = this.props;
 
     return (
       <Main>
@@ -34,9 +34,10 @@ class App extends Component {
             <Route path="*" component={NotFoundPage} />
           </Switch>
           <Snackbar
-            open={showNotification}
-            message={notification}
-            autoHideDuration={4000}
+            action={notification.action}
+            open={notification.show}
+            message={notification.text}
+            autoHideDuration={notification.time}
             onRequestClose={hideNotification}
           />
         </Page>
@@ -47,13 +48,11 @@ class App extends Component {
 
 App.propTypes = {
   hideNotification: PropTypes.func,
-  notification: PropTypes.string,
-  showNotification: PropTypes.bool,
+  notification: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
-  notification: notificationSelectors.makeSelectText(),
-  showNotification: notificationSelectors.makeSelectShowState(),
+  notification: notificationSelectors.makeSelectNotificationState(),
 });
 
 const mapDispatchToProps = dispatch => ({

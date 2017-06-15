@@ -36,7 +36,11 @@ export const getArticle = id => cachedGet(`article/${id}`);
  * Добавить новую статью
  * @param {Object} data - данные для статьи
  */
-export const addArticle = data => axios.post('article', data);
+export const addArticle = data => axios.post('article', data)
+  .then((response) => {
+    cachedGet.cache.clear();
+    return Promise.resolve(response);
+  });
 
 /**
  * Удалить статью

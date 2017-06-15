@@ -36,8 +36,8 @@ function listReducer(state = listInitialState, action) {
 
     case types.ADD_ARTICLE_SUCCESS:
       return state
-        .setIn(['by', payload.article.id], fromJS(payload.article))
-        .update('ids', ids => ids.unshift(payload.article.id));
+        .setIn(['byId', payload.article.id], fromJS(payload.article))
+        .update('ids', ids => ids.push(payload.article.id));
 
     case types.DELETE_ARTICLE_SUCCESS:
       return state
@@ -65,8 +65,7 @@ function selectedReducer(state = selectedInitialState, action) {
 
   switch (type) {
     case types.GET_ARTICLE:
-      return state
-        .set('loading', true);
+      return state.set('loading', true);
 
     case types.GET_ARTICLE_SUCCESS:
       return state
@@ -79,8 +78,11 @@ function selectedReducer(state = selectedInitialState, action) {
         .set('data', null);
 
     case types.DELETE_ARTICLE_SUCCESS:
-      return state
-        .set('data', null);
+      if (payload.id !== state.getIn(['data', 'id'])) {
+        return state;
+      }
+
+      return state.set('data', null);
 
     default:
       return state;

@@ -1,4 +1,6 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import * as api from 'api';
 import { actions as notificationActions } from 'ducks/notification';
@@ -36,9 +38,23 @@ export function* getArticle({ payload }) {
 export function* addArticle({ payload }) {
   try {
     const response = yield call(api.addArticle, payload.data);
+    yield put(notificationActions.showNotification({
+      action: (
+        // eslint-disable-next-line react/jsx-filename-extension
+        <Link
+          style={{ color: 'inherit', textDecoration: 'none' }}
+          to={`/articles/${response.data.id}`}
+        >
+          Посмотреть
+        </Link>
+      ),
+      text: 'Статья добавлена',
+      time: 6000,
+    }));
     yield put(actions.addArticleSuccess(response.data));
   } catch (err) {
     console.error(err);
+    yield put(notificationActions.showNotification({ text: 'Не удалось добавить статью' }));
     yield put(actions.addArticleFail());
   }
 }
@@ -52,9 +68,10 @@ export function* deleteArticle({ payload }) {
     }
 
     yield put(actions.deleteArticleSuccess(payload.id));
-    yield put(notificationActions.showNotification('Статья удалена'));
+    yield put(notificationActions.showNotification({ text: 'Статья удалена' }));
   } catch (err) {
     console.error(err);
+    yield put(notificationActions.showNotification({ text: 'Не удалось удалить статью' }));
     yield put(actions.deleteArticleFail());
   }
 }
@@ -63,5 +80,5 @@ export default function* () {
   yield takeLatest(types.GET_ARTICLES, getArticles);
   yield takeLatest(types.GET_ARTICLE, getArticle);
   yield takeLatest(types.ADD_ARTICLE, addArticle);
-  yield takeLatest(types.DELETE_ARTICLE, deleteArticle);
+  yield takeEvery(types.DELETE_ARTICLE, deleteArticle);
 }

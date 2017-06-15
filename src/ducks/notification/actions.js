@@ -1,8 +1,8 @@
 import * as types from './types';
 
-export const showNotification = text => ({
+export const showNotification = (data) => ({
   type: types.SHOW_NOTIFICATION,
-  payload: { text },
+  payload: { data },
 });
 
 export const hideNotification = () => ({

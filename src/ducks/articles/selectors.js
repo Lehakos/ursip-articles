@@ -34,6 +34,10 @@ const makeSelectFilters = () => createSelector(
 );
 
 const filter = (article, filters) => {
+  if (!article) {
+    return false;
+  }
+
   const startDate = filters.getIn(['date', 'start']);
   const endDate = filters.getIn(['date', 'end']);
   const title = filters.get('title').toLowerCase();
