@@ -65,7 +65,7 @@ class ArticlesListItem extends PureComponent {
           </div>
         }
       >
-        <StyledLink to={`/articles/${id}`} />
+        <StyledLink to={`/articles/one/${id}`} />
       </ListItem>
     );
   }

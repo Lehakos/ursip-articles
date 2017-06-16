@@ -67,9 +67,11 @@ router.get('/comment', function (req, res, next) {
     })
 });
 
+var commentsId = mocks.comments.length;
+
 router.post('/comment', function (req, res, next) {
     var comment = {
-        id : Date.now().toString(),
+        id : commentsId++,
         text : req.body.text,
         date: new Date(),
         user: req.body.user,

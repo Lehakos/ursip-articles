@@ -79,6 +79,11 @@ const makeSelectTotalPages = () => createSelector(
   list => list.get('totalPages'),
 );
 
+const makeSelectCurrentPage = () => createSelector(
+  getList,
+  list => list.get('currentPage'),
+);
+
 const makeSelectArticlesTitle = () => createSelector(
   [getArticlesById, getArticlesIds],
   (articles, ids) => {
@@ -121,4 +126,5 @@ export {
   makeSelectArticleData,
   makeSelectFilters,
   makeSelectTotalPages,
+  makeSelectCurrentPage,
 };

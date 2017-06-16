@@ -1,66 +1,44 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { withRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Row, Column } from 'hedron';
 import Pagination from 'components/Pagination';
-import Text from 'components/Text';
-import ArticlesList from 'components/ArticlesList';
-import Loading from 'components/Loading';
 import {
   selectors as articlesSelectors,
   actions as articlesActions,
 } from 'ducks/articles';
 
 import HomeSidebar from './HomeSidebar';
+import ArticlesPage from './ArticlesPage';
 
 const StyledPagination = styled(Pagination)`
   margin-top: 15px;
 `;
 
-const ARTICLES_PER_PAGE = 3;
-
 // eslint-disable-next-line react/prefer-stateless-function
-class HomePage extends Component {
+class HomePage extends PureComponent {
   constructor(props) {
     super(props);
-
     this.onPageChange = ::this.onPageChange;
   }
 
-  componentDidMount() {
-    this.props.getArticles(0);
-  }
-
   onPageChange({ selected }) {
-    this.props.getArticles(selected);
+    this.props.history.push(`/articles/${selected}`);
   }
 
   render() {
     const {
-      articles,
-      deleteArticle,
+      currentPage,
       changeDateFilter,
       changeTitleFilter,
       filters,
-      loading,
       titlesList,
+      match,
       totalPages,
     } = this.props;
-
-    let content = (
-      <ArticlesList
-        items={articles}
-        onItemDelete={deleteArticle}
-      />
-    );
-
-    if (loading) {
-      content = <Loading />;
-    } else if (!articles || !articles.length) {
-      content = <Text text="Не найдено ни одной статьи." />;
-    }
 
     return (
       <Row>
@@ -73,10 +51,14 @@ class HomePage extends Component {
           />
         </Column>
         <Column sm={8}>
-          {content}
+          <Switch>
+            <Route path={`${match.url}/:page`} component={ArticlesPage} />
+            <Redirect from={match.url} to={`${match.url}/0`} />
+          </Switch>
           {
             totalPages > 0 &&
             <StyledPagination
+              forcePage={currentPage}
               onPageChange={this.onPageChange}
               pageCount={totalPages}
             />
@@ -88,31 +70,24 @@ class HomePage extends Component {
 }
 
 HomePage.propTypes = {
-  articles: ArticlesList.propTypes.items,
   filters: HomeSidebar.propTypes.values,
   changeDateFilter: PropTypes.func,
   changeTitleFilter: PropTypes.func,
-  deleteArticle: PropTypes.func,
-  getArticles: PropTypes.func,
-  loading: PropTypes.bool,
+  currentPage: PropTypes.number,
+  history: PropTypes.object,
+  match: PropTypes.object,
   titlesList: PropTypes.arrayOf(PropTypes.string),
   totalPages: PropTypes.number,
 };
 
 const mapStateToProps = createStructuredSelector({
-  articles: articlesSelectors.makeSelectArticlesList(),
+  currentPage: articlesSelectors.makeSelectCurrentPage(),
   filters: articlesSelectors.makeSelectFilters(),
-  loading: articlesSelectors.makeSelectListLoadingState(),
   titlesList: articlesSelectors.makeSelectArticlesTitle(),
   totalPages: articlesSelectors.makeSelectTotalPages(),
 });
 
 const mapDispatchToProps = dispatch => ({
-  getArticles: pageNum => dispatch(articlesActions.getArticles({
-    limit: ARTICLES_PER_PAGE,
-    offset: pageNum * ARTICLES_PER_PAGE,
-  })),
-  deleteArticle: id => dispatch(articlesActions.deleteArticle(id)),
   changeDateFilter: range => dispatch(articlesActions.changeFilter({
     date: {
       start: range[0],
@@ -124,4 +99,4 @@ const mapDispatchToProps = dispatch => ({
   })),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomePage));

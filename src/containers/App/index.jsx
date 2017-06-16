@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import styled from 'styled-components';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { Page } from 'hedron';
 import Snackbar from 'material-ui/Snackbar';
 import HomePage from 'containers/HomePage';
@@ -30,9 +30,10 @@ class App extends Component {
       <Main>
         <Page>
           <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route exact path="/articles/new" component={NewArticlePage} />
-            <Route exact path="/articles/:id" component={ArticlePage} />
+            <Route exact path="/" render={() => <Redirect to="/articles" />} />
+            <Route path="/articles/new" component={NewArticlePage} />
+            <Route path="/articles/one/:id" component={ArticlePage} />
+            <Route path="/articles" component={HomePage} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
           <Snackbar

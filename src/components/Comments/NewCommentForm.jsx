@@ -36,7 +36,7 @@ const NewCommentForm = ({ handleSubmit, disabled }) => (
 );
 
 NewCommentForm.propTypes = {
-  disabled: PropTypes.func,
+  disabled: PropTypes.bool,
   handleSubmit: PropTypes.func,
 };
 
