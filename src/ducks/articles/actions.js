@@ -5,9 +5,9 @@ export const getArticles = params => ({
   payload: { params },
 });
 
-export const getArticlesSuccess = articles => ({
+export const getArticlesSuccess = payload => ({
   type: types.GET_ARTICLES_SUCCESS,
-  payload: { articles },
+  payload,
 });
 
 export const getArticlesFail = () => ({

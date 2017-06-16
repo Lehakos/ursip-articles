@@ -56,7 +56,7 @@ class Comments extends PureComponent {
   }
 
   render() {
-    const { loading, comments, onAddNewComment, className } = this.props;
+    const { loading, comments, onAddNewComment, className, disableAddNew } = this.props;
     const { open } = this.state;
     const buttonText = open ? 'Скрыть комментарии' : 'Показать комментарии';
     let content = <Text text="Нет комментариев." />;
@@ -84,7 +84,10 @@ class Comments extends PureComponent {
         }
         {
           !!onAddNewComment && open &&
-          <NewCommentForm onSubmit={data => onAddNewComment(data.toJS())} />
+          <NewCommentForm
+            disabled={disableAddNew}
+            onSubmit={data => onAddNewComment(data.toJS())}
+          />
         }
       </div>
     );
@@ -97,6 +100,7 @@ Comments.propTypes = {
     ...CommentItem.propTypes,
     id: PropTypes.number.isRequired,
   })),
+  disableAddNew: PropTypes.bool,
   loading: PropTypes.bool,
   onAddNewComment: PropTypes.func,
   onOpen: PropTypes.func,

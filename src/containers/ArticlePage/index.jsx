@@ -57,8 +57,10 @@ class ArticlePage extends PureComponent {
 
   render() {
     const {
+      addComment,
       data,
       deleteArticle,
+      disableNewComment,
       articlesLoading,
       commentsLoading,
       comments,
@@ -79,9 +81,11 @@ class ArticlePage extends PureComponent {
           onDelete={deleteArticle}
         />
         <Comments
+          disableAddNew={disableNewComment}
           loading={commentsLoading}
           comments={comments}
           onOpen={this.onCommentsOpen}
+          onAddNewComment={addComment}
         />
       </div>
     );
@@ -89,6 +93,8 @@ class ArticlePage extends PureComponent {
 }
 
 ArticlePage.propTypes = {
+  addComment: PropTypes.func,
+  disableNewComment: PropTypes.bool,
   comments: Comments.propTypes.comments,
   commentsLoading: PropTypes.bool,
   data: PropTypes.shape(Article.propTypes),
@@ -101,12 +107,14 @@ ArticlePage.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   data: articlesSelectors.makeSelectArticleData(),
+  disableNewComment: commentsSelectors.makeSelectDisableAddNew(),
   articlesLoading: articlesSelectors.makeSelectArticleLoadingState(),
   commentsLoading: commentsSelectors.makeSelectLoadingState(),
   comments: commentsSelectors.makeSelectComments(),
 });
 
 const mapDispatchToProps = dispatch => ({
+  addComment: data => dispatch(commentsActions.addComment(data)),
   deleteArticle: id => dispatch(articlesActions.deleteArticle(id, '/')),
   loadArticle: id => dispatch(articlesActions.getArticle(id)),
   loadComments: id => dispatch(commentsActions.getComments(id)),

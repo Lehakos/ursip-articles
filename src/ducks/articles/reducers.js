@@ -7,6 +7,8 @@ const listInitialState = fromJS({
   byId: {},
   ids: [],
   loading: true,
+  totalPages: 0,
+  currentPage: 0,
   filters: {
     date: {
       start: null,
@@ -23,7 +25,7 @@ function listReducer(state = listInitialState, { type, payload }) {
 
     case types.GET_ARTICLES_SUCCESS:
       return state
-        .merge(fromJS(payload.articles))
+        .merge(fromJS(payload))
         .set('loading', false);
 
     case types.GET_ARTICLES_FAIL:

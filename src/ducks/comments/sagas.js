@@ -1,9 +1,11 @@
-import { call, put, fork, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
+import { reset } from 'redux-form/immutable';
 import * as api from 'api';
 import { actions as notificationActions } from 'ducks/notification';
 
 import * as types from './types';
 import * as actions from './actions';
+import { ADD_COMMENT_FORM } from './constants';
 
 export function* getComments({ payload }) {
   try {
@@ -18,7 +20,7 @@ export function* getComments({ payload }) {
     yield put(actions.getCommentsSuccess(comments));
   } catch (err) {
     console.error(err);
-    yield fork(notificationActions.showNotification({ text: 'Не удалось загрузить комментарии' }));
+    yield put(notificationActions.showNotification({ text: 'Не удалось загрузить комментарии' }));
     yield put(actions.getCommentsFail());
   }
 }
@@ -27,9 +29,10 @@ export function* addComment({ payload }) {
   try {
     const response = yield call(api.addComment, payload.data);
     yield put(actions.addCommentSuccess(response.data));
+    yield put(reset(ADD_COMMENT_FORM));
   } catch (err) {
     console.error(err);
-    yield fork(notificationActions.showNotification({ text: 'Не удалось добавить комментарий' }));
+    yield put(notificationActions.showNotification({ text: 'Не удалось добавить комментарий' }));
     yield put(actions.addCommentFail());
   }
 }

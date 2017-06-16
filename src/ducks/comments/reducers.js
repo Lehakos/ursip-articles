@@ -7,6 +7,7 @@ const initialState = fromJS({
   byId: {},
   ids: [],
   loading: true,
+  disableAddNew: false,
 });
 
 export default function (state = initialState, { type, payload }) {
@@ -26,11 +27,17 @@ export default function (state = initialState, { type, payload }) {
         .set('ids', List())
         .set('loading', false);
 
+    case types.ADD_COMMENT:
+      return state.set('disableAddNew', true);
+
     case types.ADD_COMMENT_SUCCESS:
       return state
         .setIn(['byId', payload.data.id], payload.data)
         .update('ids', ids => ids.push(payload.data.id))
-        .set('loading', false);
+        .set('disableAddNew', false);
+
+    case types.ADD_COMMENT_FAIL:
+      return state.set('disableAddNew', false);
 
     default:
       return state;

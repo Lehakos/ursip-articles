@@ -7,6 +7,11 @@ const makeSelectLoadingState = () => createSelector(
   comments => comments.get('loading'),
 );
 
+const makeSelectDisableAddNew = () => createSelector(
+  getDomainState,
+  comments => comments.get('disableAddNew'),
+);
+
 const getIds = createSelector(
   getDomainState,
   comments => comments.get('ids'),
@@ -23,6 +28,7 @@ const makeSelectComments = () => createSelector(
 );
 
 export {
+  makeSelectDisableAddNew,
   makeSelectLoadingState,
   makeSelectComments,
 };

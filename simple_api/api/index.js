@@ -9,9 +9,15 @@ router.get('/article', function (req, res, next) {
             })
         }),
         limit = Number(req.query.limit) || articles.length,
-        offset = Number(req.query.offset) || 0;
+        offset = Number(req.query.offset) || 0,
+        total = Math.floor(articles.length / limit),
+        current = Math.ceil(offset / limit, 10);
 
-    res.json(articles.slice(offset, limit + offset))
+    res.json({
+      total: total,
+      current: current,
+      articles: articles.slice(offset, limit + offset)
+    })
 });
 
 router.get('/article/:id', function (req, res, next) {

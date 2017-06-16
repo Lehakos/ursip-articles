@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { call, put, fork, takeLatest, takeEvery } from 'redux-saga/effects';
+import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import * as api from 'api';
 import { actions as notificationActions } from 'ducks/notification';
@@ -10,15 +10,16 @@ import * as actions from './actions';
 
 export function* getArticles({ payload = {} }) {
   try {
-    const response = yield call(api.getArticles, payload.params);
+    const { data } = yield call(api.getArticles, payload.params);
+    const { total: totalPages, current: currentPage } = data;
 
-    const articles = response.data.reduce((acc, item) => {
+    const articles = data.articles.reduce((acc, item) => {
       acc.byId[item.id] = item;
       acc.ids.push(item.id);
       return acc;
     }, { byId: {}, ids: [] });
 
-    yield put(actions.getArticlesSuccess(articles));
+    yield put(actions.getArticlesSuccess({ ...articles, totalPages, currentPage }));
   } catch (err) {
     console.error(err);
     yield put(actions.getArticlesFail());
@@ -38,7 +39,7 @@ export function* getArticle({ payload }) {
 export function* addArticle({ payload }) {
   try {
     const response = yield call(api.addArticle, payload.data);
-    yield fork(notificationActions.showNotification({
+    yield put(notificationActions.showNotification({
       action: (
         // eslint-disable-next-line react/jsx-filename-extension
         <Link
@@ -54,7 +55,7 @@ export function* addArticle({ payload }) {
     yield put(actions.addArticleSuccess(response.data));
   } catch (err) {
     console.error(err);
-    yield fork(notificationActions.showNotification({ text: 'Не удалось добавить статью' }));
+    yield put(notificationActions.showNotification({ text: 'Не удалось добавить статью' }));
     yield put(actions.addArticleFail());
   }
 }
@@ -68,10 +69,10 @@ export function* deleteArticle({ payload }) {
     }
 
     yield put(actions.deleteArticleSuccess(payload.id));
-    yield fork(notificationActions.showNotification({ text: 'Статья удалена' }));
+    yield put(notificationActions.showNotification({ text: 'Статья удалена' }));
   } catch (err) {
     console.error(err);
-    yield fork(notificationActions.showNotification({ text: 'Не удалось удалить статью' }));
+    yield put(notificationActions.showNotification({ text: 'Не удалось удалить статью' }));
     yield put(actions.deleteArticleFail());
   }
 }
