@@ -14,7 +14,7 @@ const StyledDate = ({ date, color }) => {
     return null;
   }
 
-  const dateObj = moment(Date.parse(date));
+  const dateObj = moment(date);
 
   return (
     <Wrapper
