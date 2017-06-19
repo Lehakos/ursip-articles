@@ -22,8 +22,8 @@ const textStyle = {
   fontWeight: 400,
 };
 
-const BASE_SIZE = 30;
-const BASE_FONT = 18;
+export const BASE_SIZE = 30;
+export const BASE_FONT = 18;
 
 const Loading = ({ fontSize, text }) => {
   const size = BASE_SIZE * (BASE_FONT / fontSize);
