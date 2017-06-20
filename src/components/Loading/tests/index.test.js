@@ -4,7 +4,7 @@ import Subheader from 'material-ui/Subheader';
 
 import { mountComponent } from 'utils/tests';
 
-import Loading, { BASE_SIZE, BASE_FONT } from './index';
+import Loading, { BASE_SIZE, BASE_FONT } from '../index';
 
 describe('<Loading />', () => {
   let props;
@@ -49,7 +49,13 @@ describe('<Loading />', () => {
     it('если передано props.text, то рендерит его значение', () => {
       props.text = 'Какой-то текст';
       const subheader = renderComponent().find(Subheader);
-      expect(subheader.props().children).toBe(props.text);
+      expect(subheader.props().children).toEqual(props.text);
+    });
+
+    it('props.text может быть элементом', () => {
+      props.text = <b>Какой-то текст</b>;
+      const subheader = renderComponent().find(Subheader);
+      expect(subheader.props().children).toEqual(props.text);
     });
   });
 });

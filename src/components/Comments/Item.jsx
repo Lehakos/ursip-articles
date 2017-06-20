@@ -10,7 +10,7 @@ const headerStyle = {
   fontSize: '16px',
 };
 
-const Content = styled.p`
+export const Content = styled.p`
   margin: 0;
   padding: 10px 15px 20px;
 

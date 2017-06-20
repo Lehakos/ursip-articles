@@ -43,7 +43,7 @@ Loading.defaultProps = {
 
 Loading.propTypes = {
   fontSize: PropTypes.number,
-  text: PropTypes.string,
+  text: PropTypes.node,
 };
 
 export default Loading;

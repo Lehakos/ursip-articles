@@ -4,7 +4,7 @@ import moment from 'moment';
 import { shallow } from 'enzyme';
 import { mountComponent } from 'utils/tests';
 
-import StyledDate from './index';
+import StyledDate from '../index';
 
 describe('<StyledDate />', () => {
   let props;

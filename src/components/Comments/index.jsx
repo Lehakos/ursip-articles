@@ -8,17 +8,22 @@ import Loading from 'components/Loading';
 import CommentItem from './Item';
 import NewCommentForm from './NewCommentForm';
 
-const Header = styled.div`
+export const Header = styled.div`
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
 `;
 
-const StyledComment = styled(CommentItem)`
+export const Content = styled.div``;
+
+export const StyledComment = styled(CommentItem)`
   &:not(:last-child) {
     margin-bottom: 15px;
   }
 `;
+
+export const CLOSED_TEXT = 'Показать комментарии';
+export const OPENED_TEXT = 'Скрыть комментарии';
 
 class Comments extends PureComponent {
   constructor(props) {
@@ -58,7 +63,7 @@ class Comments extends PureComponent {
   render() {
     const { loading, comments, onAddNewComment, className, disableAddNew } = this.props;
     const { open } = this.state;
-    const buttonText = open ? 'Скрыть комментарии' : 'Показать комментарии';
+    const buttonText = open ? OPENED_TEXT : CLOSED_TEXT;
     let content = <Text text="Нет комментариев." />;
 
     if (loading) {
@@ -80,7 +85,9 @@ class Comments extends PureComponent {
         </Header>
         {
           open &&
-          content
+          <Content>
+            {content}
+          </Content>
         }
         {
           !!onAddNewComment && open &&
