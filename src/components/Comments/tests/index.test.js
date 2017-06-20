@@ -108,7 +108,7 @@ describe('<Comments />', () => {
 
   describe('Форма добавления нового комментария', () => {
     beforeEach(() => {
-      props.onAddNewComment = () => {};
+      props.onAddNewComment = jest.fn();
     });
 
     it('рендерится если передано props.onAddNewComment', () => {

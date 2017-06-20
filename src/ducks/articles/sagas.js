@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { call, put, takeLatest, takeEvery } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
+
 import * as api from 'api';
 import { actions as notificationActions } from 'ducks/notification';
+import { logError } from 'utils';
 
 import * as types from './types';
 import * as actions from './actions';
@@ -21,7 +23,7 @@ export function* getArticles({ payload = {} }) {
 
     yield put(actions.getArticlesSuccess({ ...articles, totalPages, currentPage }));
   } catch (err) {
-    console.error(err);
+    logError(err);
     yield put(actions.getArticlesFail());
   }
 }
@@ -31,7 +33,7 @@ export function* getArticle({ payload }) {
     const response = yield call(api.getArticle, payload.id);
     yield put(actions.getArticleSuccess(response.data));
   } catch (err) {
-    console.error(err);
+    logError(err);
     yield put(actions.getArticleFail());
   }
 }
@@ -54,7 +56,7 @@ export function* addArticle({ payload }) {
     }));
     yield put(actions.addArticleSuccess(response.data));
   } catch (err) {
-    console.error(err);
+    logError(err);
     yield put(notificationActions.showNotification({ text: 'Не удалось добавить статью' }));
     yield put(actions.addArticleFail());
   }
@@ -71,7 +73,7 @@ export function* deleteArticle({ payload }) {
     yield put(actions.deleteArticleSuccess(payload.id));
     yield put(notificationActions.showNotification({ text: 'Статья удалена' }));
   } catch (err) {
-    console.error(err);
+    logError(err);
     yield put(notificationActions.showNotification({ text: 'Не удалось удалить статью' }));
     yield put(actions.deleteArticleFail());
   }

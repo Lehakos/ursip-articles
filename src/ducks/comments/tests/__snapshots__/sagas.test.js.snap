@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getComments сага если комментарии успешно загружены, должна вызываться getCommentsSuccess 1`] = `
+Object {
+  "@@redux-saga/IO": true,
+  "CALL": Object {
+    "args": Array [
+      1,
+    ],
+    "context": null,
+    "fn": [Function],
+  },
+}
+`;
+
+exports[`getComments сага если произошла ошибка, должно быть показано уведомление и затем вызвана getCommentsFail 1`] = `
+Object {
+  "@@redux-saga/IO": true,
+  "CALL": Object {
+    "args": Array [
+      1,
+    ],
+    "context": null,
+    "fn": [Function],
+  },
+}
+`;
